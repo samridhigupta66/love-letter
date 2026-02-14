@@ -1,151 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hey Love ❤️</title>
-
+<title>For You ❤️</title>
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family: 'Segoe UI',sans-serif;}
 body{
-  margin:0;
-  font-family:Arial;
-  background:#ffd6e0;
+  background:#ffd6dc;
+  height:100vh;
+  overflow:hidden;
 }
 
-.screen{
-  display:none;
-  min-height:100vh;
-  padding:20px;
+/* COMMON SLIDE */
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.8s ease;
+  transform:scale(0);
+}
+.slide.active{transform:scale(1);}
+
+/* HEART BACKGROUND (STATIC) */
+.bg-hearts::before{
+  content:"❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️";
+  position:absolute;
+  inset:0;
+  font-size:40px;
+  opacity:0.15;
+  line-height:1.4;
   text-align:center;
 }
 
-.screen.active{
-  display:block;
-}
-
+/* BOX */
 .box{
   background:white;
-  padding:25px;
+  padding:30px;
   border-radius:20px;
-  font-size:22px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
   cursor:pointer;
-  margin:40vh auto;
-  width:fit-content;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  max-width:300px;
 }
 
-.hearts-bg{
-  background:#ffd6e0;
-  background-image:radial-gradient(red 2px, transparent 2px);
-  background-size:40px 40px;
-}
-
+/* PHOTOS */
 .photos{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
+  grid-template-columns:repeat(2,120px);
   gap:10px;
 }
-
 .photos img{
-  width:100%;
+  width:120px;
+  height:120px;
+  object-fit:cover;
   border-radius:15px;
 }
 
-.black{
+/* FLOATING HEARTS */
+.floating span{
+  position:absolute;
+  animation:float 4s linear infinite;
+  font-size:20px;
+}
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+/* TYPEWRITER */
+#final{
   background:black;
   color:red;
+  padding:20px;
+  overflow-y:auto;
 }
-
 #text{
+  font-size:18px;
   white-space:pre-wrap;
-  font-size:17px;
 }
 
-.heart{
-  position:fixed;
-  bottom:0;
-  font-size:20px;
-  animation:up 4s linear forwards;
-}
-
-@keyframes up{
-  to{transform:translateY(-110vh);opacity:0}
-}
-
+/* I LOVE YOU */
 #love{
   font-size:32px;
-  margin:30px;
-  display:none;
+  margin-top:20px;
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Screen 1 -->
-<div class="screen active hearts-bg" id="s1">
-  <div class="box" onclick="go(2)">🎁 Tap Me</div>
+<!-- SLIDE 1 -->
+<div class="slide active bg-hearts" id="s1">
+  <div class="box" onclick="next(1)">
+    🎁 Tap Me
+  </div>
 </div>
 
-<!-- Screen 2 -->
-<div class="screen" id="s2">
-  <div class="photos">
+<!-- SLIDE 2 -->
+<div class="slide" id="s2">
+  <div class="photos" onclick="next(2)">
     <img src="pic1.jpg">
     <img src="pic2.jpg">
     <img src="pic3.jpg">
     <img src="pic4.jpg">
+    <img src="pic5.jpg">
   </div>
-  <div class="box" onclick="go(3)">Next 💕</div>
 </div>
 
-<!-- Screen 3 -->
-<div class="screen" id="s3">
-  <div class="box" onclick="go(4)">💌 Open</div>
+<!-- SLIDE 3 -->
+<div class="slide" id="s3">
+  <div class="box" onclick="next(3)">
+    💌 Open Note
+  </div>
 </div>
 
-<!-- Screen 4 -->
-<div class="screen" id="s4">
-  <div class="box" onclick="go(5)">🌹❤️</div>
+<!-- SLIDE 4 -->
+<div class="slide" id="s4">
+  <div class="box" onclick="next(4)">
+    🌹❤️
+  </div>
 </div>
 
-<!-- Screen 5 -->
-<div class="screen black" id="s5">
+<!-- SLIDE 5 -->
+<div class="slide" id="final">
   <div id="text"></div>
-  <div id="love">❤️ I LOVE YOU ❤️</div>
+  <div id="love">❤️ I Love You ❤️</div>
 </div>
 
 <script>
-function go(n){
-  document.querySelectorAll('.screen')
-    .forEach(s=>s.classList.remove('active'));
-  document.getElementById('s'+n).classList.add('active');
-  if(n===5) type();
+function next(n){
+  document.getElementById("s"+n).classList.remove("active");
+  document.getElementById("s"+(n+1)).classList.add("active");
+  if(n===4) startTyping();
 }
 
-const msg=`Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat kyunki i know Tu merse pyr ne krta aur agr bta diya to friendship tut skti hai 🫠 to isliye nhi he btaungi kbhi. Tu itna acha h na yr , mera maan krta h bs terko he dekhti rhu like seriously agr Tu mere samne betha ho pure din k liye to m pure din terko he dekhti rhu🥹. Merko ne frk pdta ki tere ache dino me mai tere sath hu ya ne pr yr jab bhi thoda bhi kabhi low feel ho I'm always here for you 🫶 . M to chahti hu bs ki tu hmesha khush rhe , hamesha hste rhe❤. Tu bohot bohot important h yr mere liye. Pure din raat tere bare me he sochti rehti hu, kisi or k sath hoti hu tb b maan me tu he chla hota h🥹. Tere bina terko dekhe bina pta nhi kaise rhungi yr🥹🫠. Pehle mujhe lgta tha ki merko Tu bs vo as s friend type me he psnd h. M tere bare me sochti rehti thi hr time to m tb yhi sochti thi ki shyd hum roz baat krte h to bs attachment ho gyi hogi but ek din Maine terko dekha jb pta ne kyu pr mera terse nzre htane ka he maan ne krra tha🥹Or bs tbhi us din merko realise hogya ki nhi yr I genuinely love you🥹❤. Tu meri life me ho ya na ho yr lekin mere dil me hmesha rhega🥹Or es time feeling bohot real h sach me. Jaise i know ki tu merse pyaar ne krta but fir b m terse move on nhi krna chahti 🥹. M terko puri life time k liye pyaar krna chahti hu tere bare me he sochna chahti hu🥹🫶❤. Aj se kuch saal baad jb isko dekhu to khush hou ki haan yr jo bola tha vo aj bhi hai sb kuch❤. One sided love ki baat he kuch aur hoti h yr. Mai terko khush dekh k he khush ho jati hu 🌙. Pta he nhi chla yr kab mujhe terse itna pyaar hogya❤🥹. Or hua bhi aisa ki bs tu he hr trf dikhta h koi achi c pyaar wali reel aajaye to bs terko he imagine krti hu🩷. Itna pyara hai na yr tu🥹, bohot bohot bohot pyara lgta h mujhe tu🫠🫶. Soti hu to tere bare me soch k soti hu uth ti hu to pehla khyaal he tera atta h🫵🥹. Vo do din raat ko jo tere sath bitaye the I still remember those days🫠. Um.. Bohot ache din the vo🫶, tere sath bitaya hua hr din he acha tha pr vo do din were 'the best'❤. M chahti hu ki tu jb bhi kabhi apne liye koi partner choose krre , vo bhi terko bohot pyaar krre 🫶. Haan terko uske sath dekha to nhi jayega merse pr m selfish to nhi hu yr na he ban skti hu🥹, to bs tu jisko bhi pyaar krre vo terko hmesha khush rkhe tera khyaal rkhe ache se🫶. Tere liye mera pyaar jaisa abhi hai waisa he rhega hmesha , kabhi kum nhi hoga haan badh jrur skta h🫶. Meri hr ek pyaar wali story hr ek pyaar wala note tere liye he hota h. Kash Tu samjh skta ki kitna pyaar krti hu terse🥹. Terko to shyd pta b nhi hoga ki terko pyaar bhi krti hu 🥹🫶. Pr koi ni 🩷. Mera maan krta h bs tera hath pkd k tere sath ghumnti rhu, khin ek jagah beth k terko dekhti rhu🥹, m to yr hr din tere sath spend krna chahti hu pr I know ye to possible he nhi h❤️‍🩹🥹. Terko bohot jor se hug krne ka maan krta h yr🥹🥹🥹pr bol ne skti🫠. Kash yr tu bhi merko es way me dekhta jis way me mai dekhti hu🫠. Pr kya kr skte hai na yr 🥺. Bohot kuch hai mere pass to terko bolne ko pr abhi k liye itna he bohot hai. Pr ye jitna bhi hai meri feelings ka 30% hoga🥹 baki ka 70% fir kabhi bolungi🥹🫶. Bs yr I LOVE YOUUUUUUUUUUUUU🥹🥹❤❤🫠🫠🫶🫶`;
+/* HEARTS DURING TYPING */
+let heartInterval;
+function hearts(){
+  let span=document.createElement("span");
+  span.innerText="❤️";
+  span.style.left=Math.random()*100+"vw";
+  document.body.appendChild(span);
+  setTimeout(()=>span.remove(),4000);
+}
 
-let i=0;
-function type(){
-  const t=document.getElementById('text');
-  const love=document.getElementById('love');
-  const interval=setInterval(()=>{
-    t.textContent+=msg[i];
-    spawn();
+/* TYPEWRITER */
+const msg=`Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat kyunki i know Tu merse pyr ne krta aur agr bta diya to friendship tut skti hai 🫠 to isliye nhi he btaungi kbhi. Tu itna acha h na yr , mera maan krta h bs terko he dekhti rhu like seriously agr Tu mere samne betha ho pure din k liye to m pure din terko he dekhti rhu🥹. Merko ne frk pdta ki tere ache dino me mai tere sath hu ya ne pr yr jab bhi thoda bhi kabhi low feel ho I'm always here for you 🫶 . M to chahti hu bs ki tu hmesha khush rhe , hamesha hste rhe❤. Tu bohot bohot important h yr mere liye. Pure din raat tere bare me he sochti rehti hu, kisi or k sath hoti hu tb b maan me tu he chla hota h🥹. Tere bina terko dekhe bina pta nhi kaise rhungi yr🥹🫠. Pehle mujhe lgta tha ki merko Tu bs vo as s friend type me he psnd h. M tere bare me sochti rehti thi hr time to m tb yhi sochti thi ki shyd hum roz baat krte h to bs attachment ho gyi hogi but ek din Maine terko dekha jb pta ne kyu pr mera terse nzre htane ka he maan ne krra tha🥹Or bs tbhi us din merko realise hogya ki nhi yr I genuinely love you🥹❤. Tu meri life me ho ya na ho yr lekin mere dil me hmesha rhega🥹Or es time feeling bohot real h sach me. Jaise i know ki tu merse pyaar ne krta but fir b m terse move on nhi krna chahti 🥹. M terko puri life time k liye pyaar krna chahti hu tere bare me he sochna chahti hu🥹🫶❤. Aj se kuch saal baad jb isko dekhu to khush hou ki haan yr jo bola tha vo aj bhi hai sb kuch❤. One sided love ki baat he kuch aur hoti h yr. Mai terko khush dekh k he khush ho jati hu 🌙. Pta he nhi chla yr kab mujhe terse itna pyaar hogya❤🥹. Or hua bhi aisa ki bs tu he hr trf dikhta h koi achi c pyaar wali reel aajaye to bs terko he imagine krti hu🩷. Itna pyara hai na yr tu🥹, bohot bohot bohot pyara lgta h mujhe tu🫠🫶. Soti hu to tere bare me soch k soti hu uth ti hu to pehla khyaal he tera atta h🫵🥹. Vo do din raat ko jo tere sath bitaye the I still remember those days🫠. Um.. Bohot ache din the vo🫶, tere sath bitaya hua hr din he acha tha pr vo do din were 'the best'❤. M chahti hu ki tu jb bhi kabhi apne liye koi partner choose krre , vo bhi terko bohot pyaar krre 🫶. Haan terko uske sath dekha to nhi jayega merse pr m selfish to nhi hu yr na he ban skti hu🥹, to bs tu jisko bhi pyaar krre vo terko hmesha khush rkhe tera khyaal rkhe ache se🫶. Tere liye mera pyaar jaisa abhi hai waisa he rhega hmesha , kabhi kum nhi hoga haan badh jrur skta h🫶. Meri hr ek pyaar wali story hr ek pyaar wala note tere liye he hota h. Kash Tu samjh skta ki kitna pyaar krti hu terse🥹. Terko to shyd pta b nhi hoga ki terko pyaar bhi krti hu 🥹🫶. Pr koi ni 🩷. Mera maan krta h bs tera hath pkd k tere sath ghumnti rhu, khin ek jagah beth k terko dekhti rhu🥹, m to yr hr din tere sath spend krna chahti hu pr I know ye to possible he nhi h❤️‍🩹🥹. Terko bohot jor se hug krne ka maan krta h yr🥹🥹🥹pr bol ne skti🫠. Kash yr tu bhi merko es way me dekhta jis way me mai dekhti hu🫠. Pr kya kr skte hai na yr 🥺. Bohot kuch hai mere pass to terko bolne ko pr abhi k liye itna he bohot hai. Pr ye jitna bhi hai meri feelings ka 30% hoga🥹 baki ka 70% fir kabhi bolungi🥹🫶. Bs yr I LOVE YOUUUUUUUUUUUUU🥹🥹❤❤🫠🫠🫶🫶.`;
+
+function startTyping(){
+  let i=0;
+  heartInterval=setInterval(hearts,150);
+  let box=document.getElementById("text");
+  let typer=setInterval(()=>{
+    box.innerText+=msg[i];
+    box.parentElement.scrollTop=box.parentElement.scrollHeight;
     i++;
     if(i>=msg.length){
-      clearInterval(interval);
-      love.style.display='block';
+      clearInterval(typer);
+      clearInterval(heartInterval);
     }
-  },30);
-}
-
-function spawn(){
-  if(Math.random()>0.7)return;
-  const h=document.createElement('div');
-  h.className='heart';
-  h.innerText='❤️';
-  h.style.left=Math.random()*100+'vw';
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),4000);
+  },80);
 }
 </script>
 
