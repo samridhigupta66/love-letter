@@ -3,126 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Outside-In Image with Hearts</title>
+<title>Mobile Heart Slides</title>
 <style>
-    body {
-        margin: 0;
-        background-color: #ffc0cb; /* light pink */
-        overflow: hidden;
-        height: 100vh;
-        width: 100vw;
-        font-family: sans-serif;
-        position: relative;
-    }
+  * {margin: 0; padding: 0; box-sizing: border-box;}
+  body, html {height: 100%; width: 100%; overflow: hidden; font-family: sans-serif;}
+  
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ffc0cb; /* Light pink */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-direction: column;
+    transition: opacity 0.5s ease;
+  }
 
-    /* Container for everything */
-    .container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
+  .hidden {opacity: 0; pointer-events: none;}
 
-    /* Large hearts before image */
-    .large-heart {
-        position: absolute;
-        color: red;
-        font-size: 40px;
-        opacity: 0;
-        animation: largeHeartAnim 1.5s forwards;
-    }
+  .heart {
+    position: absolute;
+    width: 20px; height: 20px;
+    color: red;
+    font-size: 20px;
+    user-select: none;
+    pointer-events: none;
+    animation: float 5s linear infinite;
+  }
 
-    @keyframes largeHeartAnim {
-        0% {opacity: 0; transform: scale(0);}
-        50% {opacity: 1; transform: scale(1.5);}
-        100% {opacity: 0; transform: scale(0);}
-    }
+  @keyframes float {
+    0% {transform: translate(0,0) scale(1);}
+    100% {transform: translate(var(--x), var(--y)) scale(1);}
+  }
 
-    /* Small hearts background */
-    .small-heart {
-        position: absolute;
-        color: red;
-        font-size: 10px;
-        z-index: 1;
-        pointer-events: none;
-        user-select: none;
-    }
+  .center-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    animation: pop 0.8s ease forwards;
+  }
 
-    /* Image */
-    .image-box img {
-        position: absolute;
-        z-index: 2;
-        width: 90%;    /* responsive width */
-        max-width: 600px; 
-        height: auto;
-        border-radius: 15px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0;
-        animation: outsideIn 2s forwards;
-        animation-delay: 2.5s; /* starts after large hearts animation */
-        box-shadow: 0 0 20px red, 0 0 40px darkred;
-    }
+  @keyframes pop {
+    0% {transform: scale(0);}
+    100% {transform: scale(1);}
+  }
 
-    @keyframes outsideIn {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-    }
+  .typewriter-text {
+    font-size: 18px;
+    color: #000;
+    width: 90%;
+    max-width: 400px;
+    margin-top: 20px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  .yours {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #ff1493;
+    display: none;
+  }
 </style>
 </head>
 <body>
 
-<div class="container" id="container">
-    <!-- Image -->
-    <div class="image-box">
-        <img src="gift.png" alt="Main Image"> <!-- replace with your image -->
-    </div>
+<!-- Slide 1 -->
+<div class="slide" id="slide1">
+  <img src="gift.png" class="center-image" alt="Inside Out 1">
+</div>
+
+<!-- Slide 2 -->
+<div class="slide hidden" id="slide2">
+  <img src="letter.png" class="center-image" alt="Inside Out 2">
+</div>
+
+<!-- Slide 3 -->
+<div class="slide hidden" id="slide3">
+  <div class="typewriter-text" id="typewriter"></div>
+  <div class="yours">-YOURS SAMRIDHI💗</div>
 </div>
 
 <script>
-const container = document.getElementById('container');
-const screenWidth = window.innerWidth;
-const screenHeight = window.innerHeight;
+const slides = document.querySelectorAll('.slide');
+let currentSlide = 0;
 
-// Step 1: Generate large hearts from all directions
-const largeHeartCount = 30;
-
-for(let i=0; i<largeHeartCount; i++){
+// Function to create hearts
+function createHearts(count) {
+  for(let i=0;i<count;i++){
     const heart = document.createElement('div');
-    heart.className = 'large-heart';
-    heart.innerHTML = '❤';
-
-    // random position anywhere on screen
-    heart.style.left = Math.random() * screenWidth + 'px';
-    heart.style.top = Math.random() * screenHeight + 'px';
-
-    // random delay for slightly staggered animation
-    heart.style.animationDelay = (Math.random()*1) + 's';
-
-    container.appendChild(heart);
-
-    // remove after animation
-    setTimeout(() => {
-        heart.remove();
-    }, 1500);
+    heart.className = 'heart';
+    heart.textContent = '❤️';
+    const x = (Math.random()*200 - 100) + 'px';
+    const y = (Math.random()*200 - 100) + 'px';
+    heart.style.setProperty('--x', x);
+    heart.style.setProperty('--y', y);
+    heart.style.left = '50%';
+    heart.style.top = '50%';
+    document.body.appendChild(heart);
+  }
 }
 
-// Step 2: After 2s, create small hearts evenly spaced line by line
-setTimeout(() => {
-    const spacingX = 40;
-    const spacingY = 40;
+// Start with big hearts in center
+function popHearts() {
+  for(let i=0;i<20;i++){
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '❤️';
+    heart.style.fontSize = '40px';
+    heart.style.left = '50%';
+    heart.style.top = '50%';
+    const x = (Math.random()*window.innerWidth - window.innerWidth/2)+'px';
+    const y = (Math.random()*window.innerHeight - window.innerHeight/2)+'px';
+    heart.style.setProperty('--x', x);
+    heart.style.setProperty('--y', y);
+    document.body.appendChild(heart);
+  }
+}
 
-    for(let y = 0; y < screenHeight; y += spacingY){
-        for(let x = 0; x < screenWidth; x += spacingX){
-            const heart = document.createElement('div');
-            heart.className = 'small-heart';
-            heart.innerHTML = '❤';
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            container.appendChild(heart);
-        }
+// Slide transition
+function nextSlide() {
+  slides[currentSlide].classList.add('hidden');
+  currentSlide++;
+  if(currentSlide < slides.length){
+    slides[currentSlide].classList.remove('hidden');
+
+    // Slide 3 special: typewriter and moving hearts
+    if(currentSlide === 2){
+      createHearts(30);
+      typeWriter("Hey! This is a special message typed out just for you. Enjoy the hearts all around while you read this!");
+    } else {
+      popHearts();
     }
-}, 1500);
+  }
+}
+
+// Typewriter effect
+function typeWriter(text){
+  const el = document.getElementById('typewriter');
+  let i=0;
+  const interval = setInterval(()=>{
+    if(i<text.length){
+      el.textContent += text[i];
+      i++;
+    } else {
+      clearInterval(interval);
+      document.querySelector('.yours').style.display = 'block';
+      stopHearts();
+    }
+  },50);
+}
+
+// Stop hearts animation after typewriter
+function stopHearts(){
+  document.querySelectorAll('.heart').forEach(h=>h.style.animationPlayState='paused');
+}
+
+// Tap anywhere to go next slide
+document.body.addEventListener('click', nextSlide);
+
+// Initialize first slide
+popHearts();
 
 </script>
 
