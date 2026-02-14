@@ -2,96 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Animated Hearts with Centered Image</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Image with Heart Background</title>
 <style>
     body {
         margin: 0;
-        background: #ffc0cb; /* light pink */
-        height: 100vh;
+        background-color: #ffc0cb; /* light pink */
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: sans-serif;
+        height: 100vh;
         position: relative;
+        font-family: sans-serif;
     }
 
+    /* Container for image + hearts */
     .container {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        height: 100%;
     }
 
-    /* Image exactly in center */
+    /* Image */
     .container img {
         position: relative;
-        z-index: 2;
-        width: 600px;   /* replace with your image exact width */
-        height: 400px;  /* replace with your image exact height */
+        z-index: 2; /* on top */
+        max-width: 90%;   /* responsive width */
+        max-height: 70%;  /* responsive height */
         object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0 0 20px red;
+        border-radius: 15px;
+        box-shadow: 0 0 20px red, 0 0 40px darkred;
     }
 
-    /* Hearts */
-    .heart {
+    /* Background hearts */
+    .heart-bg {
         position: absolute;
+        z-index: 1; /* behind image */
         color: red;
-        font-size: 12px;
-        opacity: 0.7;
-        z-index: 0; /* behind image */
-        animation: floatPulse 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes floatPulse {
-        0% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.6;
-        }
-        50% {
-            transform: translate(0, -10px) scale(1.1);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(0, 0) scale(1);
-            opacity: 0.6;
-        }
+        font-size: 10px; /* small hearts */
+        pointer-events: none;
+        user-select: none;
     }
 </style>
 </head>
 <body>
 
 <div class="container" id="container">
-    <!-- 👇 Replace with your landscape image -->
-    <img src="pic.jpg" alt="Landscape Image">
+    <img src="pic.jpg"> <!-- 🔹 replace with your image name -->
 </div>
 
 <script>
-    const container = document.getElementById('container');
-    const heartSpacingX = 40; // horizontal spacing
-    const heartSpacingY = 40; // vertical spacing
-    const heartSize = 12;
+    const container = document.getElementById("container");
 
+    // Get viewport size
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
-    // Create hearts line by line, full screen
-    for (let y = 0; y < screenHeight; y += heartSpacingY) {
-        for (let x = 0; x < screenWidth; x += heartSpacingX) {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤';
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-            heart.style.fontSize = heartSize + 'px';
+    const heartSize = 10; // small heart size
+    const spacingX = 40;  // horizontal spacing
+    const spacingY = 40;  // vertical spacing
 
-            // Random delay for floating effect
-            heart.style.animationDelay = (Math.random() * 2) + 's';
-
+    // Create hearts dynamically based on screen size
+    for(let y = 0; y < screenHeight; y += spacingY){
+        for(let x = 0; x < screenWidth; x += spacingX){
+            const heart = document.createElement("div");
+            heart.className = "heart-bg";
+            heart.innerHTML = "❤";
+            heart.style.left = x + "px";
+            heart.style.top = y + "px";
+            heart.style.fontSize = heartSize + "px";
             container.appendChild(heart);
         }
     }
+
+    // Optional: adjust hearts if screen resizes
+    window.addEventListener("resize", () => {
+        container.querySelectorAll(".heart-bg").forEach(h => h.remove());
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+        for(let y = 0; y < newHeight; y += spacingY){
+            for(let x = 0; x < newWidth; x += spacingX){
+                const heart = document.createElement("div");
+                heart.className = "heart-bg";
+                heart.innerHTML = "❤";
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+                heart.style.fontSize = heartSize + "px";
+                container.appendChild(heart);
+            }
+        }
+    });
 </script>
 
 </body>
