@@ -87,20 +87,41 @@
     font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   }
 
+  /* Boxes for HEY LOVE and open me */
+  .text-box {
+    background:pink;
+    color:red;
+    padding:8px 15px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:20px;
+    text-align:center;
+    margin:5px;
+    z-index:2;
+    user-select:none;
+  }
+
+  .open-box {
+    cursor:pointer;
+  }
+
 </style>
 </head>
 <body>
 
 <!-- Slide 1 -->
-<div class="slide" id="slide1">
+<div class="slide" id="slide1" style="background-color:#ffe6f0;">
   <div class="slide-bg" id="slide1-bg"></div>
+  <div class="text-box">HEY LOVE🥹❤</div>
   <img src="gift.png" class="center-image" id="slide1-image">
+  <div class="text-box open-box" id="slide1-open">open me👻</div>
 </div>
 
 <!-- Slide 2 -->
-<div class="slide hidden" id="slide2">
+<div class="slide hidden" id="slide2" style="background-color:#000;">
   <div class="slide-bg" id="slide2-bg"></div>
   <img src="letter.png" class="center-image" id="slide2-image">
+  <div class="text-box open-box" id="slide2-open">open me👻</div>
 </div>
 
 <!-- Slide 3 -->
@@ -211,8 +232,13 @@ addSmallHearts('slide2-bg');
 // Start Slide 1 animation
 animateImage('slide1-image');
 
-// Tap anywhere to go next slide
-document.body.addEventListener('click', nextSlide);
+// Tap boxes to go next slide
+document.getElementById('slide1-open').addEventListener('click', ()=>{
+  nextSlide();
+});
+document.getElementById('slide2-open').addEventListener('click', ()=>{
+  nextSlide();
+});
 </script>
 
 </body>
