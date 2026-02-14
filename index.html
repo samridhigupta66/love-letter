@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Image With Heart Burst</title>
-
+<title>Hearts Behind Image</title>
 <style>
     body {
         margin: 0;
@@ -13,73 +12,63 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 
-    /* Image container */
-    .image-box {
+    /* Container for hearts and image */
+    .container {
         position: relative;
+        width: 300px;
+        height: 450px;
+    }
+
+    /* Image always on top */
+    .container img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
         z-index: 2;
+        box-shadow: 0 0 25px red, 0 0 50px darkred;
         animation: insideOut 2.5s ease-out forwards;
     }
 
-    .image-box img {
-        width: 280px;
-        height: 420px;
-        object-fit: cover;
-        border-radius: 15px;
-
-        /* 🔴 only red glow, NO color change */
-        box-shadow: 0 0 25px red, 0 0 50px darkred;
-    }
-
     @keyframes insideOut {
-        0% {
-            transform: scale(0.1);
-            opacity: 0;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
+        0% { transform: scale(0.1); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Hearts */
+    /* Hearts behind */
     .heart {
         position: absolute;
         color: red;
         font-size: 18px;
         pointer-events: none;
-        z-index: 1;
+        z-index: 1; /* behind image */
         animation: burst 4s ease-out forwards;
     }
 
     @keyframes burst {
-        0% {
-            transform: translate(0, 0) scale(0.3);
-            opacity: 1;
-        }
-        100% {
-            transform: translate(var(--x), var(--y)) scale(1.4);
-            opacity: 0;
-        }
+        0% { transform: translate(0,0) scale(0.3); opacity: 1; }
+        100% { transform: translate(var(--x), var(--y)) scale(1.4); opacity: 0; }
     }
 </style>
 </head>
-
 <body>
 
-<div class="image-box" id="imageBox">
+<div class="container" id="container">
     <!-- 👇 apni portrait image ka exact naam -->
     <img src="pic.jpg">
 </div>
 
 <script>
-    const heartCount = 90; // ~80% heart filled feel
-    const imageBox = document.getElementById("imageBox");
-    const rect = imageBox.getBoundingClientRect();
+    const heartCount = 90;
+    const container = document.getElementById("container");
+    const rect = container.getBoundingClientRect();
 
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
     for (let i = 0; i < heartCount; i++) {
         setTimeout(() => {
@@ -87,18 +76,19 @@
             heart.className = "heart";
             heart.innerHTML = "❤";
 
+            // Start at center of container
             heart.style.left = centerX + "px";
             heart.style.top = centerY + "px";
 
-            // Random direction (har corner tak)
-            const x = (Math.random() - 0.5) * window.innerWidth;
-            const y = (Math.random() - 0.5) * window.innerHeight;
+            // Random direction within container for corners
+            const x = (Math.random() - 0.5) * rect.width * 2;
+            const y = (Math.random() - 0.5) * rect.height * 2;
 
             heart.style.setProperty("--x", x + "px");
             heart.style.setProperty("--y", y + "px");
             heart.style.fontSize = (14 + Math.random() * 26) + "px";
 
-            document.body.appendChild(heart);
+            container.appendChild(heart);
 
             setTimeout(() => {
                 heart.remove();
