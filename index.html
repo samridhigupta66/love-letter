@@ -2,200 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hey love ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey Love ❤️</title>
 
 <style>
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
-  overflow-x:hidden;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#ffd6e0;overflow:hidden;height:100vh}
+
+.slide{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transform:scale(0);
+  transition:0.8s ease;
+}
+.slide.active{transform:scale(1)}
+
+.static-hearts{
+  background:#ffd6e0;
+}
+.static-hearts::before{
+  content:"❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️";
+  position:absolute;inset:0;
+  font-size:40px;opacity:0.2;
+  text-align:center;line-height:1.5;
 }
 
-section{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-}
-
-#box{
-  font-size:90px;
+.box{
+  background:white;
+  padding:30px;
+  border-radius:20px;
   cursor:pointer;
-  animation:shake 1.5s infinite;
-}
-@keyframes shake{
-  0%,100%{transform:rotate(0)}
-  25%{transform:rotate(5deg)}
-  75%{transform:rotate(-5deg)}
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  font-size:22px;
 }
 
 .photos{
-  display:none;
-  flex-wrap:wrap;
-  gap:14px;
-  justify-content:center;
+  display:grid;
+  grid-template-columns:repeat(2,130px);
+  gap:12px;
 }
 .photos img{
-  width:110px;
-  height:140px;
+  width:130px;height:130px;
   object-fit:cover;
-  border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,.3);
-  animation:pop 1s ease;
-}
-.center{
-  width:150px;
-  height:190px;
+  border-radius:18px;
 }
 
-@keyframes pop{
-  from{opacity:0;transform:scale(0)}
-  to{opacity:1;transform:scale(1)}
+#typingSlide{
+  background:black;
+  color:red;
+  padding:20px;
+  overflow-y:auto;
 }
 
-.letter{
-  display:none;
-  font-size:70px;
-  cursor:pointer;
+#text{
+  white-space:pre-wrap;
+  font-size:17px;
+  line-height:1.6;
 }
 
-.card{
-  display:none;
-  background:#fff;
-  padding:25px;
-  border-radius:20px;
-  max-width:420px;
-  margin:20px;
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-}
-.card p{
-  text-align:left;
-  white-space:pre-line;
-  line-height:1.8;
-  font-size:15.5px;
-}
-
-.reactions span{
-  font-size:28px;
-  margin:6px;
-  cursor:pointer;
-}
-
-.float{
+.heart{
   position:fixed;
-  bottom:-20px;
-  animation:float 6s linear infinite;
+  font-size:20px;
+  animation:float 4s linear forwards;
 }
 @keyframes float{
-  to{transform:translateY(-120vh);opacity:0}
+  from{transform:translateY(100vh);opacity:1}
+  to{transform:translateY(-10vh);opacity:0}
+}
+
+#love{
+  text-align:center;
+  font-size:32px;
+  margin:30px 0;
+  animation:pulse 1s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+  100%{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Scene 1 -->
-<section>
-  <div id="box">🎁</div>
-  <p>Tap to open</p>
-</section>
+<!-- Slide 1 -->
+<div class="slide active static-hearts" id="s1">
+  <div class="box" onclick="next(1)">🎁 Tap Me</div>
+</div>
 
-<!-- Scene 2 -->
-<section>
-  <div class="photos">
+<!-- Slide 2 -->
+<div class="slide" id="s2">
+  <div class="photos" onclick="next(2)">
     <img src="pic1.jpg">
     <img src="pic2.jpg">
-    <img src="pic3.jpg" class="center">
+    <img src="pic3.jpg">
     <img src="pic4.jpg">
     <img src="pic5.jpg">
   </div>
-</section>
+</div>
 
-<!-- Scene 3 -->
-<section>
-  <div class="letter">💌</div>
-  <p>Open the letter</p>
-</section>
+<!-- Slide 3 -->
+<div class="slide" id="s3">
+  <div class="box" onclick="next(3)">💌</div>
+</div>
 
-<!-- Scene 4 -->
-<section>
-  <div class="card">
-    <p>
-Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bata nahi sakti ye baat kyunki mujhe pata hai tu mujhse pyaar nahi karta aur agar bata diya to shayad friendship tut jaaye 🫠 isliye kabhi nahi bataungi.
+<!-- Slide 4 -->
+<div class="slide" id="s4">
+  <div class="box" onclick="next(4)">🌹❤️</div>
+</div>
 
-Tu itna acha hai na yr, mera mann karta hai bas tujhe hi dekhti rahu. Agar tu mere saamne pure din ke liye baitha ho, to main pure din sirf tujhe hi dekhti rahu🥹.
-
-Mujhe fark nahi padta ki tere ache dino me main tere saath hoon ya nahi, par jab bhi tu thoda sa bhi low feel kare, main hamesha tere saath hoon 🫶.
-
-Main chahti hoon bas tu hamesha khush rahe, hamesha haste rahe ❤️. Tu mere liye bohot bohot important hai.
-
-Pure din raat tere baare me hi sochti rehti hoon. Kisi aur ke saath hoti hoon tab bhi mann me tu hi chala hota hai🥹.
-
-Tere bina, tujhe dekhe bina kaise rahungi mujhe khud nahi pata🥹🫠.
-
-Pehle mujhe lagta tha ki tu bas friend jaisa pasand hai, shayad roz baat hoti hai isliye attachment ho gayi hogi. Par jis din maine tujhe dekha aur meri nazrein tujhse hati hi nahi, usi din mujhe realise ho gaya — main sach me tujhse pyaar karti hoon🥹❤️.
-
-Tu meri life me ho ya na ho, par mere dil me hamesha rahega. Ye feeling bohot real hai.
-
-Jaanti hoon tu mujhse pyaar nahi karta, phir bhi main move on nahi karna chahti🥹. Main puri life tujhe hi pyaar karna chahti hoon🫶.
-
-Aaj se kuch saal baad jab is letter ko padhungi, to khush houngi ki jo kaha tha wo aaj bhi wahi hai ❤️.
-
-One sided love ki baat hi kuch aur hoti hai. Main tujhe khush dekh kar hi khush ho jaati hoon 🌙.
-
-Pata hi nahi chala kab mujhe tujhse itna pyaar ho gaya🥹❤️. Har pyaari reel me bas tujhe hi imagine karti hoon.
-
-Tu bohot pyara lagta hai mujhe, bohot bohot pyara🫠🫶.
-
-Sote waqt bhi tera khyaal aur uthte hi sabse pehla khyaal bhi tera hi hota hai🥹.
-
-Wo do din raat jo tere saath bitaye the, aaj bhi yaad hain. Wo din bohot special the ❤️.
-
-Main chahti hoon jab tu apni life me kisi ko choose kare, wo tujhe bohot pyaar kare aur hamesha khush rakhe🫶.
-
-Mera pyaar tere liye jaisa aaj hai, waisa hi hamesha rahega. Kabhi kam nahi hoga.
-
-Bas itna hi kehna tha —
-I LOVE YOUUUUUUUUUUUUU 🥹❤️🫶
-    </p>
-
-    <div class="reactions">
-      <span>❤️</span>
-      <span>😍</span>
-      <span>🥹</span>
-      <span>😭</span>
-    </div>
-
-    <p style="text-align:right;margin-top:15px;">
-      — Someone who cares, Samridhi 🌸
-    </p>
-  </div>
-</section>
+<!-- Slide 5 -->
+<div class="slide" id="typingSlide">
+  <div id="text"></div>
+  <div id="love" style="display:none;">❤️ I LOVE YOU ❤️</div>
+</div>
 
 <script>
-const box=document.getElementById("box");
-const photos=document.querySelector(".photos");
-const letter=document.querySelector(".letter");
-const card=document.querySelector(".card");
+let current=1;
+function next(n){
+  document.getElementById("s"+n).classList.remove("active");
+  document.getElementById("s"+(n+1)).classList.add("active");
+  if(n+1===5) startTyping();
+}
 
-box.onclick=()=>{photos.style.display="flex";window.scrollTo({top:innerHeight,behavior:"smooth"});}
-photos.onclick=()=>{letter.style.display="block";window.scrollTo({top:innerHeight*2,behavior:"smooth"});}
-letter.onclick=()=>{card.style.display="block";window.scrollTo({top:innerHeight*3,behavior:"smooth"});}
+const message=`Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat kyunki i know Tu merse pyr ne krta aur agr bta diya to friendship tut skti hai 🫠 to isliye nhi he btaungi kbhi. Tu itna acha h na yr , mera maan krta h bs terko he dekhti rhu like seriously agr Tu mere samne betha ho pure din k liye to m pure din terko he dekhti rhu🥹. Merko ne frk pdta ki tere ache dino me mai tere sath hu ya ne pr yr jab bhi thoda bhi kabhi low feel ho I'm always here for you 🫶 . M to chahti hu bs ki tu hmesha khush rhe , hamesha hste rhe❤. Tu bohot bohot important h yr mere liye. Pure din raat tere bare me he sochti rehti hu, kisi or k sath hoti hu tb b maan me tu he chla hota h🥹. Tere bina terko dekhe bina pta nhi kaise rhungi yr🥹🫠. Pehle mujhe lgta tha ki merko Tu bs vo as s friend type me he psnd h. M tere bare me sochti rehti thi hr time to m tb yhi sochti thi ki shyd hum roz baat krte h to bs attachment ho gyi hogi but ek din Maine terko dekha jb pta ne kyu pr mera terse nzre htane ka he maan ne krra tha🥹Or bs tbhi us din merko realise hogya ki nhi yr I genuinely love you🥹❤. Tu meri life me ho ya na ho yr lekin mere dil me hmesha rhega🥹Or es time feeling bohot real h sach me. Jaise i know ki tu merse pyaar ne krta but fir b m terse move on nhi krna chahti 🥹. M terko puri life time k liye pyaar krna chahti hu tere bare me he sochna chahti hu🥹🫶❤. Aj se kuch saal baad jb isko dekhu to khush hou ki haan yr jo bola tha vo aj bhi hai sb kuch❤. One sided love ki baat he kuch aur hoti h yr. Mai terko khush dekh k he khush ho jati hu 🌙. Pta he nhi chla yr kab mujhe terse itna pyaar hogya❤🥹. Or hua bhi aisa ki bs tu he hr trf dikhta h koi achi c pyaar wali reel aajaye to bs terko he imagine krti hu🩷. Itna pyara hai na yr tu🥹, bohot bohot bohot pyara lgta h mujhe tu🫠🫶. Soti hu to tere bare me soch k soti hu uth ti hu to pehla khyaal he tera atta h🫵🥹. Vo do din raat ko jo tere sath bitaye the I still remember those days🫠. Um.. Bohot ache din the vo🫶, tere sath bitaya hua hr din he acha tha pr vo do din were 'the best'❤. M chahti hu ki tu jb bhi kabhi apne liye koi partner choose krre , vo bhi terko bohot pyaar krre 🫶. Haan terko uske sath dekha to nhi jayega merse pr m selfish to nhi hu yr na he ban skti hu🥹, to bs tu jisko bhi pyaar krre vo terko hmesha khush rkhe tera khyaal rkhe ache se🫶. Tere liye mera pyaar jaisa abhi hai waisa he rhega hmesha , kabhi kum nhi hoga haan badh jrur skta h🫶. Meri hr ek pyaar wali story hr ek pyaar wala note tere liye he hota h. Kash Tu samjh skta ki kitna pyaar krti hu terse🥹. Terko to shyd pta b nhi hoga ki terko pyaar bhi krti hu 🥹🫶. Pr koi ni 🩷. Mera maan krta h bs tera hath pkd k tere sath ghumnti rhu, khin ek jagah beth k terko dekhti rhu🥹, m to yr hr din tere sath spend krna chahti hu pr I know ye to possible he nhi h❤️‍🩹🥹. Terko bohot jor se hug krne ka maan krta h yr🥹🥹🥹pr bol ne skti🫠. Kash yr tu bhi merko es way me dekhta jis way me mai dekhti hu🫠. Pr kya kr skte hai na yr 🥺. Bohot kuch hai mere pass to terko bolne ko pr abhi k liye itna he bohot hai. Pr ye jitna bhi hai meri feelings ka 30% hoga🥹 baki ka 70% fir kabhi bolungi🥹🫶. Bs yr I LOVE YOUUUUUUUUUUUUU🥹🥹❤❤🫠🫠🫶🫶`;
 
-setInterval(()=>{
-  const e=document.createElement("div");
-  e.className="float";
-  e.innerHTML=Math.random()>0.5?"💖":"🌹";
-  e.style.left=Math.random()*100+"vw";
-  e.style.fontSize=18+Math.random()*20+"px";
-  document.body.appendChild(e);
-  setTimeout(()=>e.remove(),6000);
-},300);
+let i=0;
+function startTyping(){
+  const t=document.getElementById("text");
+  const s=document.getElementById("typingSlide");
+  const int=setInterval(()=>{
+    t.textContent+=message[i];
+    s.scrollTop=s.scrollHeight;
+    if(Math.random()<0.7) spawnHeart();
+    i++;
+    if(i>=message.length){
+      clearInterval(int);
+      document.getElementById("love").style.display="block";
+    }
+  },35);
+}
+
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.textContent="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),4000);
+}
 </script>
 
 </body>
-  </html>
+</html>
