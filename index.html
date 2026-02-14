@@ -3,99 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Image with Heart Background</title>
+<title>Outside-In Image with Hearts</title>
 <style>
     body {
         margin: 0;
         background-color: #ffc0cb; /* light pink */
         overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
-        position: relative;
+        width: 100vw;
         font-family: sans-serif;
+        position: relative;
     }
 
-    /* Container for image + hearts */
+    /* Container for everything */
     .container {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         width: 100%;
         height: 100%;
     }
 
+    /* Large hearts before image */
+    .large-heart {
+        position: absolute;
+        color: red;
+        font-size: 40px;
+        opacity: 0;
+        animation: largeHeartAnim 1.5s forwards;
+    }
+
+    @keyframes largeHeartAnim {
+        0% {opacity: 0; transform: scale(0);}
+        50% {opacity: 1; transform: scale(1.5);}
+        100% {opacity: 0; transform: scale(0);}
+    }
+
+    /* Small hearts background */
+    .small-heart {
+        position: absolute;
+        color: red;
+        font-size: 10px;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+    }
+
     /* Image */
-    .container img {
-        position: relative;
-        z-index: 2; /* on top */
-        max-width: 90%;   /* responsive width */
-        max-height: 70%;  /* responsive height */
-        object-fit: cover;
+    .image-box img {
+        position: absolute;
+        z-index: 2;
+        width: 90%;    /* responsive width */
+        max-width: 600px; 
+        height: auto;
         border-radius: 15px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        animation: outsideIn 2s forwards;
+        animation-delay: 2.5s; /* starts after large hearts animation */
         box-shadow: 0 0 20px red, 0 0 40px darkred;
     }
 
-    /* Background hearts */
-    .heart-bg {
-        position: absolute;
-        z-index: 1; /* behind image */
-        color: red;
-        font-size: 10px; /* small hearts */
-        pointer-events: none;
-        user-select: none;
+    @keyframes outsideIn {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 </style>
 </head>
 <body>
 
 <div class="container" id="container">
-    <img src="pic.jpg"> <!-- 🔹 replace with your image name -->
+    <!-- Image -->
+    <div class="image-box">
+        <img src="gift.png" alt="Main Image"> <!-- replace with your image -->
+    </div>
 </div>
 
 <script>
-    const container = document.getElementById("container");
+const container = document.getElementById('container');
+const screenWidth = window.innerWidth;
+const screenHeight = window.innerHeight;
 
-    // Get viewport size
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+// Step 1: Generate large hearts from all directions
+const largeHeartCount = 30;
 
-    const heartSize = 10; // small heart size
-    const spacingX = 40;  // horizontal spacing
-    const spacingY = 40;  // vertical spacing
+for(let i=0; i<largeHeartCount; i++){
+    const heart = document.createElement('div');
+    heart.className = 'large-heart';
+    heart.innerHTML = '❤';
 
-    // Create hearts dynamically based on screen size
+    // random position anywhere on screen
+    heart.style.left = Math.random() * screenWidth + 'px';
+    heart.style.top = Math.random() * screenHeight + 'px';
+
+    // random delay for slightly staggered animation
+    heart.style.animationDelay = (Math.random()*1) + 's';
+
+    container.appendChild(heart);
+
+    // remove after animation
+    setTimeout(() => {
+        heart.remove();
+    }, 1500);
+}
+
+// Step 2: After 2s, create small hearts evenly spaced line by line
+setTimeout(() => {
+    const spacingX = 40;
+    const spacingY = 40;
+
     for(let y = 0; y < screenHeight; y += spacingY){
         for(let x = 0; x < screenWidth; x += spacingX){
-            const heart = document.createElement("div");
-            heart.className = "heart-bg";
-            heart.innerHTML = "❤";
-            heart.style.left = x + "px";
-            heart.style.top = y + "px";
-            heart.style.fontSize = heartSize + "px";
+            const heart = document.createElement('div');
+            heart.className = 'small-heart';
+            heart.innerHTML = '❤';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
             container.appendChild(heart);
         }
     }
+}, 1500);
 
-    // Optional: adjust hearts if screen resizes
-    window.addEventListener("resize", () => {
-        container.querySelectorAll(".heart-bg").forEach(h => h.remove());
-        const newWidth = window.innerWidth;
-        const newHeight = window.innerHeight;
-        for(let y = 0; y < newHeight; y += spacingY){
-            for(let x = 0; x < newWidth; x += spacingX){
-                const heart = document.createElement("div");
-                heart.className = "heart-bg";
-                heart.innerHTML = "❤";
-                heart.style.left = x + "px";
-                heart.style.top = y + "px";
-                heart.style.fontSize = heartSize + "px";
-                container.appendChild(heart);
-            }
-        }
-    });
 </script>
 
 </body>
