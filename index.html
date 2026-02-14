@@ -20,12 +20,11 @@
 
   .heart {
     position:absolute;
+    font-size:40px;
     color:red;
     user-select:none;
     pointer-events:none;
-    font-size:30px;
-    opacity:0.8;
-    transition: transform 0.1s linear;
+    transition: all 0.1s linear;
   }
 
   .center-image {
@@ -40,20 +39,19 @@
     100% {transform: scale(1);}
   }
 
-  /* Last slide scrollable */
   .typewriter-text {
     font-size:18px; color:#000;
     width:90%; max-width:400px; margin-top:20px;
     overflow-wrap: break-word; white-space: pre-wrap;
     text-align:left;
   }
+
   .slide3-content {
-    position: relative;
     width:100%; height:100%;
-    overflow-y:auto;
-    padding:20px;
+    overflow-y:auto; /* scrollable */
     display:flex; flex-direction:column;
     align-items:center;
+    padding:20px;
   }
 
   .yours {
@@ -99,7 +97,7 @@ function animateHearts(slide, imageId, callback){
     h.className='heart'; h.textContent='❤️';
     h.style.left='50%'; h.style.top='50%';
     slide.appendChild(h);
-    setTimeout(()=>{ h.style.transform=`translate(${pos.x},${pos.y}) scale(1.2)`; }, i*150);
+    setTimeout(()=>{ h.style.transform=`translate(${pos.x},${pos.y})`; }, i*150);
   });
   setTimeout(()=>{
     document.getElementById(imageId).style.display='block';
@@ -107,7 +105,7 @@ function animateHearts(slide, imageId, callback){
   }, positions.length*150 + 800);
 }
 
-// Slide 3: typewriter + enhanced moving hearts
+// Slide 3: typewriter + moving hearts
 function typeWriter(text){
   const el=document.getElementById('typewriter');
   let i=0;
@@ -119,6 +117,7 @@ function typeWriter(text){
     }else{
       clearInterval(interval);
       document.querySelector('.yours').style.display='block';
+      stopHearts(); // stop hearts when text ends
     }
   },50);
 }
@@ -136,25 +135,25 @@ function createMovingHearts(count){
     slide3.appendChild(h);
 
     let angle=Math.random()*2*Math.PI;
-    let speed=0.5 + Math.random()*1.5;
+    let speed=0.2 + Math.random()*0.3; // slower
     const interval=setInterval(()=>{
       let x=parseFloat(h.style.left);
       let y=parseFloat(h.style.top);
       x+=Math.cos(angle)*speed;
       y+=Math.sin(angle)*speed;
-      // bounce off edges
       if(x<0 || x>100) angle = Math.PI - angle;
       if(y<0 || y>100) angle = -angle;
       x=Math.max(0, Math.min(100, x));
       y=Math.max(0, Math.min(100, y));
       h.style.left=x+'vw';
       h.style.top=y+'vh';
-    },30);
+    },40); // slower update
     heartIntervals.push(interval);
   }
 }
 function stopHearts(){
   heartIntervals.forEach(i=>clearInterval(i));
+  heartIntervals = [];
 }
 
 // Next slide logic
@@ -168,7 +167,7 @@ function nextSlide(){
     if(currentSlide===1) animateHearts(slides[1],'slide2-image');
     if(currentSlide===2){
       createMovingHearts(50); // more hearts
-      typeWriter("Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat...");
+      typeWriter("Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat kyunki i know Tu merse pyr ne krta aur agr bta diya to friendship tut skti hai 🫠 to isliye nhi he btaungi kbhi. Tu itna acha h na yr , mera maan krta h bs terko he dekhti rhu like seriously agr Tu mere samne betha ho pure din k liye to m pure din terko he dekhti rhu🥹. Merko ne frk pdta ki tere ache dino me mai tere sath hu ya ne pr yr jab bhi thoda bhi kabhi low feel ho I'm always here for you 🫶 . M to chahti hu bs ki tu hmesha khush rhe , hamesha hste rhe❤. Tu bohot bohot important h yr mere liye. Pure din raat tere bare me he sochti rehti hu, kisi or k sath hoti hu tb b maan me tu he chla hota h🥹. Tere bina terko dekhe bina pta nhi kaise rhungi yr🥹🫠. Pehle mujhe lgta tha ki merko Tu bs vo as s friend type me he psnd h. M tere bare me sochti rehti thi hr time to m tb yhi sochti thi ki shyd hum roz baat krte h to bs attachment ho gyi hogi but ek din Maine terko dekha jb pta ne kyu pr mera terse nzre htane ka he maan ne krra tha🥹Or bs tbhi us din merko realise hogya ki nhi yr I genuinely love you🥹❤. Tu meri life me ho ya na ho yr lekin mere dil me hmesha rhega🥹Or es time feeling bohot real h sach me. Jaise i know ki tu merse pyaar ne krta but fir b m terse move on nhi krna chahti 🥹. M terko puri life time k liye pyaar krna chahti hu tere bare me he sochna chahti hu🥹🫶❤. Aj se kuch saal baad jb isko dekhu to khush hou ki haan yr jo bola tha vo aj bhi hai sb kuch❤. One sided love ki baat he kuch aur hoti h yr. Mai terko khush dekh k he khush ho jati hu 🌙. Pta he nhi chla yr kab mujhe terse itna pyaar hogya❤🥹. Or hua bhi aisa ki bs tu he hr trf dikhta h koi achi c pyaar wali reel aajaye to bs terko he imagine krti hu🩷. Itna pyara hai na yr tu🥹, bohot bohot bohot pyara lgta h mujhe tu🫠🫶. Soti hu to tere bare me soch k soti hu uth ti hu to pehla khyaal he tera atta h🫵🥹. Vo do din raat ko jo tere sath bitaye the I still remember those days🫠. Um.. Bohot ache din the vo🫶, tere sath bitaya hua hr din he acha tha pr vo do din were 'the best'❤. M chahti hu ki tu jb bhi kabhi apne liye koi partner choose krre , vo bhi terko bohot pyaar krre 🫶. Haan terko uske sath dekha to nhi jayega merse pr m selfish to nhi hu yr na he ban skti hu🥹, to bs tu jisko bhi pyaar krre vo terko hmesha khush rkhe tera khyaal rkhe ache se🫶. Tere liye mera pyaar jaisa abhi hai waisa he rhega hmesha , kabhi kum nhi hoga haan badh jrur skta h🫶. Meri hr ek pyaar wali story hr ek pyaar wala note tere liye he hota h. Kash Tu samjh skta ki kitna pyaar krti hu terse🥹. Terko to shyd pta b nhi hoga ki terko pyaar bhi krti hu 🥹🫶. Pr koi ni 🩷. Mera maan krta h bs tera hath pkd k tere sath ghumnti rhu, khin ek jagah beth k terko dekhti rhu🥹, m to yr hr din tere sath spend krna chahti hu pr I know ye to possible he nhi h❤️‍🩹🥹. Terko bohot jor se hug krne ka maan krta h yr🥹🥹🥹pr bol ne skti🫠. Kash yr tu bhi merko es way me dekhta jis way me mai dekhti hu🫠. Pr kya kr skte hai na yr 🥺. Bohot kuch hai mere pass to terko bolne ko pr abhi k liye itna he bohot hai. Pr ye jitna bhi hai meri feelings ka 30% hoga🥹 baki ka 70% fir kabhi bolungi🥹🫶. Bs yr I LOVE YOUUUUUUUUUUUUU🥹🥹❤❤🫠🫠🫶🫶"); // your full message here
     }
   }
 }
@@ -181,4 +180,4 @@ document.body.addEventListener('click', nextSlide);
 </script>
 
 </body>
- </html>
+</html>
