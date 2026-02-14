@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Red Glow Image</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: black;
-        }
+<meta charset="UTF-8">
+<title>Red Glow Image</title>
 
-        .image-box img {
-            width: 300px;
-            border-radius: 10px;
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-            /* Red glow effect */
-            box-shadow: 
-                0 0 10px red,
-                0 0 20px red,
-                0 0 30px darkred;
-        }
-    </style>
+    img {
+        width: 300px;   /* size change kar sakti ho */
+        border-radius: 12px;
+
+        /* 🔴 Red side glow effect */
+        box-shadow:
+            0 0 10px red,
+            0 0 25px red,
+            0 0 50px darkred;
+    }
+</style>
+
 </head>
 <body>
 
-    <div class="image-box">
-        <img src="image.jpg" alt="My Image">
-    </div>
+    <!-- yahan image ka exact naam likho -->
+    <img src="gift.png" alt="My Image">
 
 </body>
 </html>
