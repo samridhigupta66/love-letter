@@ -1,118 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Love Gift</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Red Glow Image</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
 
-<style>
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:black;
-  overflow:hidden;
-  font-family:Arial, sans-serif;
-}
+        .image-box img {
+            width: 300px;
+            border-radius: 10px;
 
-.slide{
-  position:absolute;
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  transform:translateX(100%);
-  transition:transform 1s ease;
-}
-
-.slide.active{ transform:translateX(0); }
-.slide.out-left{ transform:translateX(-100%); }
-.slide.out-right{ transform:translateX(100%); }
-
-img{
-  max-width:70%;
-  filter:drop-shadow(0 30px 50px rgba(255,0,0,0.35));
-}
-
-.small{ max-width:40%; }
-
-canvas{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-</style>
+            /* Red glow effect */
+            box-shadow: 
+                0 0 10px red,
+                0 0 20px red,
+                0 0 30px darkred;
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="hearts"></canvas>
-
-<div class="slide active"><img src="gift.png"></div>
-<div class="slide"><img src="photo.jpg"></div>
-<div class="slide"><img src="gift.png" class="small"></div>
-<div class="slide"><img src="letter.png"></div>
-
-<div class="slide">
-  <div style="color:red;width:90%;max-height:85%;overflow-y:auto;">
-    <p id="text"></p>
-    <h1 id="love" style="display:none;text-align:center;">I LOVE YOU</h1>
-    <div id="sign" style="display:none;text-align:right;">YOURS "SAMRIDHI ❤👀"</div>
-  </div>
-</div>
-
-<script>
-const slides=document.querySelectorAll('.slide');
-let i=0;
-
-document.addEventListener('click',e=>{
-  const mid=innerWidth/2;
-  slides[i].classList.remove('active');
-  slides[i].classList.add(e.clientX>mid?'out-left':'out-right');
-  i+= e.clientX>mid ? 1 : -1;
-  i=Math.max(0,Math.min(i,slides.length-1));
-  slides[i].classList.add('active');
-});
-
-/* HEARTS */
-const c=document.getElementById("hearts");
-const x=c.getContext("2d");
-function resize(){c.width=innerWidth;c.height=innerHeight;}
-resize();onresize=resize;
-
-let hearts=[];
-for(let i=0;i<80;i++)
-  hearts.push({x:Math.random()*c.width,y:Math.random()*c.height,s:5+Math.random()*4});
-
-function draw(){
-  x.clearRect(0,0,c.width,c.height);
-  hearts.forEach(h=>{
-    x.fillStyle="red";
-    x.beginPath();
-    x.arc(h.x,h.y,h.s,0,Math.PI*2);
-    x.fill();
-    h.y-=1;
-    if(h.y<0)h.y=c.height;
-  });
-  requestAnimationFrame(draw);
-}
-draw();
-
-/* TYPEWRITER */
-const msg="Kya likhu yrr🥹 i love youuuuuu alot yr 🥹 terko bta ne skti ye baat kyunki i know Tu merse pyr ne krta aur agr bta diya to friendship tut skti hai 🫠 to isliye nhi he btaungi kbhi. Tu itna acha h na yr , mera maan krta h bs terko he dekhti rhu like seriously agr Tu mere samne betha ho pure din k liye to m pure din terko he dekhti rhu🥹. Merko ne frk pdta ki tere ache dino me mai tere sath hu ya ne pr yr jab bhi thoda bhi kabhi low feel ho I'm always here for you 🫶 . M to chahti hu bs ki tu hmesha khush rhe , hamesha hste rhe❤. Tu bohot bohot important h yr mere liye. Pure din raat tere bare me he sochti rehti hu, kisi or k sath hoti hu tb b maan me tu he chla hota h🥹. Tere bina terko dekhe bina pta nhi kaise rhungi yr🥹🫠. Pehle mujhe lgta tha ki merko Tu bs vo as s friend type me he psnd h. M tere bare me sochti rehti thi hr time to m tb yhi sochti thi ki shyd hum roz baat krte h to bs attachment ho gyi hogi but ek din Maine terko dekha jb pta ne kyu pr mera terse nzre htane ka he maan ne krra tha🥹Or bs tbhi us din merko realise hogya ki nhi yr I genuinely love you🥹❤. Tu meri life me ho ya na ho yr lekin mere dil me hmesha rhega🥹Or es time feeling bohot real h sach me. Jaise i know ki tu merse pyaar ne krta but fir b m terse move on nhi krna chahti 🥹. M terko puri life time k liye pyaar krna chahti hu tere bare me he sochna chahti hu🥹🫶❤. Aj se kuch saal baad jb isko dekhu to khush hou ki haan yr jo bola tha vo aj bhi hai sb kuch❤. One sided love ki baat he kuch aur hoti h yr. Mai terko khush dekh k he khush ho jati hu 🌙. Pta he nhi chla yr kab mujhe terse itna pyaar hogya❤🥹. Or hua bhi aisa ki bs tu he hr trf dikhta h koi achi c pyaar wali reel aajaye to bs terko he imagine krti hu🩷. Itna pyara hai na yr tu🥹, bohot bohot bohot pyara lgta h mujhe tu🫠🫶. Soti hu to tere bare me soch k soti hu uth ti hu to pehla khyaal he tera atta h🫵🥹. Vo do din raat ko jo tere sath bitaye the I still remember those days🫠. Um.. Bohot ache din the vo🫶, tere sath bitaya hua hr din he acha tha pr vo do din were 'the best'❤. M chahti hu ki tu jb bhi kabhi apne liye koi partner choose krre , vo bhi terko bohot pyaar krre 🫶. Haan terko uske sath dekha to nhi jayega merse pr m selfish to nhi hu yr na he ban skti hu🥹, to bs tu jisko bhi pyaar krre vo terko hmesha khush rkhe tera khyaal rkhe ache se🫶. Tere liye mera pyaar jaisa abhi hai waisa he rhega hmesha , kabhi kum nhi hoga haan badh jrur skta h🫶. Meri hr ek pyaar wali story hr ek pyaar wala note tere liye he hota h. Kash Tu samjh skta ki kitna pyaar krti hu terse🥹. Terko to shyd pta b nhi hoga ki terko pyaar bhi krti hu 🥹🫶. Pr koi ni 🩷. Mera maan krta h bs tera hath pkd k tere sath ghumnti rhu, khin ek jagah beth k terko dekhti rhu🥹, m to yr hr din tere sath spend krna chahti hu pr I know ye to possible he nhi h❤️‍🩹🥹. Terko bohot jor se hug krne ka maan krta h yr🥹🥹🥹pr bol ne skti🫠. Kash yr tu bhi merko es way me dekhta jis way me mai dekhti hu🫠. Pr kya kr skte hai na yr 🥺. Bohot kuch hai mere pass to terko bolne ko pr abhi k liye itna he bohot hai. Pr ye jitna bhi hai meri feelings ka 30% hoga🥹 baki ka 70% fir kabhi bolungi🥹🫶. Bs yr I LOVE YOUUUUUUUUUUUUU🥹🥹❤❤🫠🫠🫶🫶";
-let k=0;
-function type(){
-  if(k<msg.length){
-    text.textContent+=msg[k++];
-    setTimeout(type,40);
-  }else{
-    love.style.display="block";
-    sign.style.display="block";
-  }
-}
-slides[4].addEventListener("transitionend",type,{once:true});
-</script>
+    <div class="image-box">
+        <img src="image.jpg" alt="My Image">
+    </div>
 
 </body>
 </html>
