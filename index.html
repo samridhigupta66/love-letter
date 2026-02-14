@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Animated Hearts Background with Image</title>
+<title>Animated Hearts with Centered Image</title>
 <style>
     body {
         margin: 0;
@@ -12,15 +12,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
         font-family: sans-serif;
+        position: relative;
     }
 
     .container {
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    /* Image on top */
+    /* Image exactly in center */
     .container img {
         position: relative;
         z-index: 2;
@@ -61,7 +64,7 @@
 
 <div class="container" id="container">
     <!-- 👇 Replace with your landscape image -->
-    <img src="pic.jpg" alt="Landscape Image">
+    <img src="png.jpg" alt="Landscape Image">
 </div>
 
 <script>
@@ -73,6 +76,7 @@
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
+    // Create hearts line by line, full screen
     for (let y = 0; y < screenHeight; y += heartSpacingY) {
         for (let x = 0; x < screenWidth; x += heartSpacingX) {
             const heart = document.createElement('div');
@@ -82,7 +86,7 @@
             heart.style.top = y + 'px';
             heart.style.fontSize = heartSize + 'px';
 
-            // Add slight random delay for smooth floating effect
+            // Random delay for floating effect
             heart.style.animationDelay = (Math.random() * 2) + 's';
 
             container.appendChild(heart);
