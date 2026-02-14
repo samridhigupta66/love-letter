@@ -2,99 +2,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hearts Behind Image</title>
+<title>Animated Hearts Background with Image</title>
 <style>
     body {
         margin: 0;
-        background: black;
+        background: #ffc0cb; /* light pink */
         height: 100vh;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
+        font-family: sans-serif;
     }
 
-    /* Container for hearts and image */
     .container {
         position: relative;
-        width: 300px;
-        height: 450px;
     }
 
-    /* Image always on top */
+    /* Image on top */
     .container img {
         position: relative;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 15px;
         z-index: 2;
-        box-shadow: 0 0 25px red, 0 0 50px darkred;
-        animation: insideOut 2.5s ease-out forwards;
+        width: 600px;   /* replace with your image exact width */
+        height: 400px;  /* replace with your image exact height */
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 0 20px red;
     }
 
-    @keyframes insideOut {
-        0% { transform: scale(0.1); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Hearts behind */
+    /* Hearts */
     .heart {
         position: absolute;
         color: red;
-        font-size: 18px;
-        pointer-events: none;
-        z-index: 1; /* behind image */
-        animation: burst 4s ease-out forwards;
+        font-size: 12px;
+        opacity: 0.7;
+        z-index: 0; /* behind image */
+        animation: floatPulse 4s ease-in-out infinite alternate;
     }
 
-    @keyframes burst {
-        0% { transform: translate(0,0) scale(0.3); opacity: 1; }
-        100% { transform: translate(var(--x), var(--y)) scale(1.4); opacity: 0; }
+    @keyframes floatPulse {
+        0% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translate(0, -10px) scale(1.1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(0, 0) scale(1);
+            opacity: 0.6;
+        }
     }
 </style>
 </head>
 <body>
 
 <div class="container" id="container">
-    <!-- 👇 apni portrait image ka exact naam -->
-    <img src="pic.jpg">
+    <!-- 👇 Replace with your landscape image -->
+    <img src="pic.jpg" alt="Landscape Image">
 </div>
 
 <script>
-    const heartCount = 90;
-    const container = document.getElementById("container");
-    const rect = container.getBoundingClientRect();
+    const container = document.getElementById('container');
+    const heartSpacingX = 40; // horizontal spacing
+    const heartSpacingY = 40; // vertical spacing
+    const heartSize = 12;
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
-    for (let i = 0; i < heartCount; i++) {
-        setTimeout(() => {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerHTML = "❤";
+    for (let y = 0; y < screenHeight; y += heartSpacingY) {
+        for (let x = 0; x < screenWidth; x += heartSpacingX) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            heart.style.fontSize = heartSize + 'px';
 
-            // Start at center of container
-            heart.style.left = centerX + "px";
-            heart.style.top = centerY + "px";
-
-            // Random direction within container for corners
-            const x = (Math.random() - 0.5) * rect.width * 2;
-            const y = (Math.random() - 0.5) * rect.height * 2;
-
-            heart.style.setProperty("--x", x + "px");
-            heart.style.setProperty("--y", y + "px");
-            heart.style.fontSize = (14 + Math.random() * 26) + "px";
+            // Add slight random delay for smooth floating effect
+            heart.style.animationDelay = (Math.random() * 2) + 's';
 
             container.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
-
-        }, i * 40);
+        }
     }
 </script>
 
