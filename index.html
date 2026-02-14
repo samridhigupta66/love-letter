@@ -2,35 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Red Glow Image</title>
+<title>Inside Out Red Love Animation</title>
 
 <style>
     body {
         margin: 0;
-        height: 100vh;
         background: black;
+        height: 100vh;
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    img {
-        width: 1000px;   /* size change kar sakti ho */
-        border-radius: 12px;
+    /* Image container */
+    .image-box {
+        position: absolute;
+        animation: insideOut 3s ease-out forwards;
+    }
 
-        /* 🔴 Red side glow effect */
-        box-shadow:
-            0 0 10px red,
-            0 0 25px red,
-            0 0 50px darkred;
+    .image-box img {
+        width: 280px;
+        height: 420px;
+        object-fit: cover;
+        filter: grayscale(100%) brightness(0.9) sepia(1) hue-rotate(-20deg) saturate(5);
+        box-shadow: 0 0 30px red, 0 0 60px darkred;
+        border-radius: 15px;
+    }
+
+    /* Inside out animation */
+    @keyframes insideOut {
+        0% {
+            transform: scale(0.1);
+            opacity: 0;
+        }
+        60% {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Heart style */
+    .heart {
+        position: absolute;
+        color: red;
+        font-size: 18px;
+        animation: floatUp 4s linear forwards;
+        opacity: 0.9;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) scale(0.5);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-700px) scale(1.5);
+            opacity: 0;
+        }
     }
 </style>
-
 </head>
+
 <body>
 
-    <!-- yahan image ka exact naam likho -->
-    <img src="gift.png" alt="My Image">
+<div class="image-box">
+    <!-- 🔴 yahan apni portrait image ka naam daalo -->
+    <img src="pic.jpg">
+</div>
+
+<script>
+    // 🔴 Hearts ka amount (zyada = ~80% screen hearts)
+    const heartCount = 80;
+
+    for (let i = 0; i < heartCount; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤";
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.bottom = "-20px";
+            heart.style.fontSize = (15 + Math.random() * 25) + "px";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+
+        }, i * 60);
+    }
+</script>
 
 </body>
 </html>
