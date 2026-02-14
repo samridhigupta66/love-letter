@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Inside Out Red Love Animation</title>
+<title>Image With Heart Burst</title>
 
 <style>
     body {
@@ -17,49 +17,49 @@
 
     /* Image container */
     .image-box {
-        position: absolute;
-        animation: insideOut 3s ease-out forwards;
+        position: relative;
+        z-index: 2;
+        animation: insideOut 2.5s ease-out forwards;
     }
 
     .image-box img {
         width: 280px;
         height: 420px;
         object-fit: cover;
-        filter: grayscale(100%) brightness(0.9) sepia(1) hue-rotate(-20deg) saturate(5);
-        box-shadow: 0 0 30px red, 0 0 60px darkred;
         border-radius: 15px;
+
+        /* 🔴 only red glow, NO color change */
+        box-shadow: 0 0 25px red, 0 0 50px darkred;
     }
 
-    /* Inside out animation */
     @keyframes insideOut {
         0% {
             transform: scale(0.1);
             opacity: 0;
         }
-        60% {
-            opacity: 1;
-        }
         100% {
             transform: scale(1);
+            opacity: 1;
         }
     }
 
-    /* Heart style */
+    /* Hearts */
     .heart {
         position: absolute;
         color: red;
         font-size: 18px;
-        animation: floatUp 4s linear forwards;
-        opacity: 0.9;
+        pointer-events: none;
+        z-index: 1;
+        animation: burst 4s ease-out forwards;
     }
 
-    @keyframes floatUp {
+    @keyframes burst {
         0% {
-            transform: translateY(0) scale(0.5);
+            transform: translate(0, 0) scale(0.3);
             opacity: 1;
         }
         100% {
-            transform: translateY(-700px) scale(1.5);
+            transform: translate(var(--x), var(--y)) scale(1.4);
             opacity: 0;
         }
     }
@@ -68,14 +68,18 @@
 
 <body>
 
-<div class="image-box">
-    <!-- 🔴 yahan apni portrait image ka naam daalo -->
+<div class="image-box" id="imageBox">
+    <!-- 👇 apni portrait image ka exact naam -->
     <img src="pic.jpg">
 </div>
 
 <script>
-    // 🔴 Hearts ka amount (zyada = ~80% screen hearts)
-    const heartCount = 80;
+    const heartCount = 90; // ~80% heart filled feel
+    const imageBox = document.getElementById("imageBox");
+    const rect = imageBox.getBoundingClientRect();
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
     for (let i = 0; i < heartCount; i++) {
         setTimeout(() => {
@@ -83,9 +87,16 @@
             heart.className = "heart";
             heart.innerHTML = "❤";
 
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.bottom = "-20px";
-            heart.style.fontSize = (15 + Math.random() * 25) + "px";
+            heart.style.left = centerX + "px";
+            heart.style.top = centerY + "px";
+
+            // Random direction (har corner tak)
+            const x = (Math.random() - 0.5) * window.innerWidth;
+            const y = (Math.random() - 0.5) * window.innerHeight;
+
+            heart.style.setProperty("--x", x + "px");
+            heart.style.setProperty("--y", y + "px");
+            heart.style.fontSize = (14 + Math.random() * 26) + "px";
 
             document.body.appendChild(heart);
 
@@ -93,7 +104,7 @@
                 heart.remove();
             }, 4000);
 
-        }, i * 60);
+        }, i * 40);
     }
 </script>
 
